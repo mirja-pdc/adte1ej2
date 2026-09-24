@@ -30,9 +30,6 @@ public class BufferedReaderyBufferedWriter {
 		       
 		       // Mientras haya líneas en el documento, se leen y procesan
 		       while (linea != null) {
-		    	   
-		    	 // Se lee la línea
-		    	 linea = fbr.readLine();
 		    	 
 		    	 // Si la línea termina con "ERROR", se genera un error y se suma 1 al contador de errores
 		    	 if (linea.endsWith("ERROR")) {
@@ -45,7 +42,15 @@ public class BufferedReaderyBufferedWriter {
 		    		 
 		    		 // Se aumenta en uno el contador de errores
 		    		 errores++;
-		    	 }  
+		    	 } 
+		    	 
+		    	 // Se lee la línea termine o no con "ERROR", para avanzar a la siguiente línea con BufferedReader.
+		    	 // Antes tenía "linea = fbr.readLine();" al principio del while (antes del if), 
+		    	 // generando un NullPointerException al intentar ejecutar el programa. 
+		    	 // La he movido aquí por sugerencia de Gemini, para no saltarse procesar la primera 
+		    	 // línea en el if, y para que el programa no termine
+		    	 // intentando ejecutar linea.endsWith("ERROR") cuando línea tiene el valor null
+		    	 linea = fbr.readLine();
 		         
 		       }
 		       

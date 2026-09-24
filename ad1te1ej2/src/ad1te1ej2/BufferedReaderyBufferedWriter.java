@@ -1,9 +1,11 @@
 package ad1te1ej2;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -14,15 +16,19 @@ import java.io.IOException;
 public class BufferedReaderyBufferedWriter {
 
 	  public static void main(String[] args) {
+		    
+		    // Se declara el String nomFich para usarlo en la gestión del error FileNotFoundException
+		    // y para crear el fichero a leer sin hacer necesario usar ese nombre de fichero de entrada
+		    String nomFich = "accesos.log";
 
-		    try (BufferedReader fbr = new BufferedReader(new FileReader("." + File.separator + "accesos.log"));
+		    try (BufferedReader fbr = new BufferedReader(new FileReader("." + File.separator + nomFich));
 		    	 BufferedWriter fbw = new BufferedWriter(new FileWriter(new File("errores.log")))) {
 		    	
 		       // Contador de errores y variable String para guardar líneas leídas	
 		       int errores = 0;
-		       String linea;
+		       String linea = fbr.readLine();
 		       
-		       // Mientras haya líneas en el documento
+		       // Mientras haya líneas en el documento, se leen y procesan
 		       while (linea != null) {
 		    	   
 		    	 // Se lee la línea
@@ -32,16 +38,19 @@ public class BufferedReaderyBufferedWriter {
 		    	 if (linea.endsWith("ERROR")) {
 		    		 
 		    		 // Se escribe la línea con ERROR en errores.log
-		    		 fbw.writeLine(linea);
+		    		 // Yo había intentado hacer fbw.writeLine(linea), usando un método que no existe,
+		    		 // y Gemini me ha sugerido la forma correcta:
+		    		 fbw.write(linea);   // Escribe el texto
+		    		 fbw.newLine();     // Inserta el salto de línea
 		    		 
 		    		 // Se aumenta en uno el contador de errores
 		    		 errores++;
 		    	 }  
-		    	 
-		    	// Se añade al final de errores.log una línea con el total de errores encontrados en accesos.log
-		    	fbw.writeLine("Se han encontrado " + errores + " errores en accesos.log.");
 		         
 		       }
+		       
+		       // Se añade al final de errores.log una línea con el total de errores encontrados en accesos.log
+		       fbw.write("Se han encontrado " + errores + " errores en accesos.log.");
 		       
 		    } catch (FileNotFoundException e) {
 		    	

@@ -50,7 +50,7 @@ public class BufferedReaderyBufferedWriter {
 		       }
 		       
 		       // Se añade al final de errores.log una línea con el total de errores encontrados en accesos.log
-		       fbw.write("Se han encontrado " + errores + " errores en accesos.log.");
+		       fbw.write("Se han encontrado " + errores + " errores en " + nomFich + ".");
 		       
 		    } catch (FileNotFoundException e) {
 		    	
